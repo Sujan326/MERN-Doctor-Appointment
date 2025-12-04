@@ -1,0 +1,1 @@
+[Tailwind-Configuration-Link](https://tailwindcss.com/docs/installation/using-vite)
