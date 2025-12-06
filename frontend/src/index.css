@@ -31,3 +31,10 @@
 ::-webkit-scrollbar {
   @apply hidden;
 }
+
+@media (max-width: 740px) {
+  .active p {
+    color: white;
+    background-color: #5f6fff;
+  }
+}
