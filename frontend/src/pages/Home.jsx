@@ -1,12 +1,13 @@
-import Banner from "../components/Banner"
-import Header from "../components/Header"
-import SpecialityMenu from "../components/SpecialityMenu"
-import TopDoctors from "../components/TopDoctors"
+import Banner from "../components/Home/Banner"
+import Header from "../components/Home/Header"
+import SpecialityMenu from "../components/Home/SpecialityMenu"
+import TopDoctors from "../components/Home/TopDoctors"
+
 
 function Home() {
   return (
     <div>
-      <Header />
+      <Header/>
       <SpecialityMenu />
       <TopDoctors />
       <Banner />
