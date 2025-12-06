@@ -12,6 +12,9 @@
   .text-primary {
     color: #5f6fff;
   }
+  .border-primary {
+    border-color: #5f6fff;
+  }
   .hover\:bg-primary:hover {
     background-color: #5f6fff;
   }
