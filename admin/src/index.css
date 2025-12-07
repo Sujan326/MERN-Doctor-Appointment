@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .bg-primary {
+    background-color: #5f6fff;
+  }
+  .text-primary {
+    color: #5F6FFF;
+  }
+  .border-primary {
+    border-color: #5f6fff;
+  }
+  .hover\:bg-primary:hover {
+    background-color: #5f6fff;
+  }
+  .grid-cols-auto {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
