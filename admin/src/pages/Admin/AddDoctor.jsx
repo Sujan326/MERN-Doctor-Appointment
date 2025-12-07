@@ -19,10 +19,14 @@ function AddDoctor() {
   const [address1, setAddress1] = useState("");
   const [address2, setAddress2] = useState("");
 
+  const [loading, setLoading] = useState(false);
+
   const { adminToken, backendUrl } = useContext(AdminContext);
 
   const onSubmitHandler = async (e) => {
     e.preventDefault();
+
+    setLoading(true);
 
     try {
       if (!docImage) {
@@ -73,6 +77,8 @@ function AddDoctor() {
     } catch (error) {
       toast.error(error.message);
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -241,9 +247,12 @@ function AddDoctor() {
         </div>
         <button
           type="submit"
-          className="bg-primary px-10 py-3 mt-4 text-white rounded-full"
+          disabled={loading}
+          className={`bg-primary px-10 py-3 mt-4 text-white rounded-full ${
+            loading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
         >
-          Add Doctor
+          {loading ? "Adding Doctor..." : "Add Doctor"}
         </button>
       </div>
     </form>
