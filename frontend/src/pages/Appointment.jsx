@@ -64,7 +64,13 @@ function Appointment() {
         currentDate.setMinutes(currentDate.getMinutes() + 30);
       }
 
-      setDoctorSlots((prev) => [...prev, timeSlots]);
+      setDoctorSlots((prev) => [
+        ...prev,
+        {
+          date: new Date(currentDate), // always store the date
+          slots: timeSlots, // may be empty
+        },
+      ]);
     }
   };
 
@@ -147,15 +153,15 @@ function Appointment() {
                       : "border border-gray-400"
                   }`}
                 >
-                  <p>{item[0] && daysOfWeek[item[0].datetime.getDay()]}</p>
-                  <p>{item[0] && item[0].datetime.getDate()}</p>
+                  <p>{daysOfWeek[item.date.getDay()]}</p>
+                  <p>{item.date.getDate()}</p>
                 </div>
               ))}
           </div>
 
           <div className="flex items-center gap-3 w-full overflow-x-scroll mt-4">
-            {doctorSlots.length &&
-              doctorSlots[slotIndex].map((item, index) => (
+            {doctorSlots.length && doctorSlots[slotIndex].slots.length > 0 ? (
+              doctorSlots[slotIndex].slots.map((item, index) => (
                 <p
                   onClick={() => setSlotTime(item.time)}
                   className={`text-sm font-light flex-shrink-0 px-5 py-2 rounded-full cursor-pointer ${
@@ -167,8 +173,12 @@ function Appointment() {
                 >
                   {item.time.toLowerCase()}
                 </p>
-              ))}
+              ))
+            ) : (
+              <p className="text-sm text-gray-500 py-2">No slots available</p>
+            )}
           </div>
+
           <button className="bg-primary text-white text-sm font-light px-14 py-3 rounded-full my-6">
             Book an Appointment
           </button>
