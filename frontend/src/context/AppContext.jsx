@@ -6,6 +6,11 @@ export const AppContext = createContext();
 
 const AppContextProvider = (props) => {
   const [doctors, setDoctors] = useState([]);
+  const [userToken, setUserToken] = useState(
+    localStorage.getItem("userToken")
+      ? localStorage.getItem("userToken")
+      : false
+  );
 
   const currencySymbol = "$";
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -31,7 +36,9 @@ const AppContextProvider = (props) => {
   const value = {
     doctors,
     currencySymbol,
-    getDoctorsData,
+    userToken,
+    setUserToken,
+    backendUrl,
   };
 
   return (
