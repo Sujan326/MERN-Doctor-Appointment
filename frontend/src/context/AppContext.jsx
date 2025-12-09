@@ -11,6 +11,7 @@ const AppContextProvider = (props) => {
       ? localStorage.getItem("userToken")
       : false
   );
+  const [userData, setUserData] = useState(false);
 
   const currencySymbol = "$";
   const backendUrl = import.meta.env.VITE_BACKEND_URL;
@@ -29,9 +30,35 @@ const AppContextProvider = (props) => {
     }
   };
 
+  const loadUserProfileData = async () => {
+    try {
+      const { data } = await axios.get(backendUrl + "/api/user/get-profile", {
+        headers: { token: userToken },
+      });
+
+      if (data.success) {
+        setUserData(data.userData);
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
+
   useEffect(() => {
     getDoctorsData();
   }, []);
+
+  useEffect(() => {
+    if (userToken) {
+      loadUserProfileData();
+    } else {
+      setUserData(false);
+    }
+  }, [userToken]);
 
   const value = {
     doctors,
@@ -39,6 +66,9 @@ const AppContextProvider = (props) => {
     userToken,
     setUserToken,
     backendUrl,
+    userData,
+    setUserData,
+    loadUserProfileData,
   };
 
   return (

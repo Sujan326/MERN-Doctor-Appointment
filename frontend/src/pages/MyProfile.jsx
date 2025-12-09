@@ -1,25 +1,78 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { AppContext } from "../context/AppContext";
 import { assets } from "../assets/assets_frontend/assets";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 function MyProfile() {
-  const [userData, setUserData] = useState({
-    name: "Sujan",
-    image: assets.profile_pic,
-    email: "sujan@gmail.com",
-    phone: "8073525839",
-    address: {
-      line1: "Banglore ",
-      line2: "Karnataka ",
-    },
-    gender: "Male",
-    dob: "2002-06-25",
-  });
+  const { userData, setUserData, userToken, backendUrl, loadUserProfileData } =
+    useContext(AppContext);
 
   const [isEdit, setIsEdit] = useState(false);
+  const [image, setImage] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const updateUserProfileData = async () => {
+    setLoading(true);
+    try {
+      const formData = new FormData();
+      formData.append("name", userData.name);
+      formData.append("phone", userData.phone);
+      formData.append("address", JSON.stringify(userData.address));
+      formData.append("gender", userData.gender);
+      formData.append("dob", userData.dob);
+
+      image && formData.append("image", image);
+
+      const { data } = await axios.post(
+        backendUrl + "/api/user/update-profile",
+        formData,
+        { headers: { token: userToken } }
+      );
+
+      if (data.success) {
+        toast.success(data.message);
+        // get new updated data
+        await loadUserProfileData();
+        setIsEdit(false);
+        setImage(false);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="max-w-lg flex flex-col gap-2 text-sm">
-      <img className="w-36 rounded" src={userData.image} alt="" />
+      {isEdit ? (
+        <label htmlFor="image">
+          <div className="inline-block relative cursor-pointer">
+            <img
+              src={image ? URL.createObjectURL(image) : userData.image}
+              alt=""
+              className="w-36 rounded opacity-75"
+            />
+            <img
+              className="w-10 absolute bottom-12 right-12"
+              src={image ? " " : assets.upload_icon}
+              alt=""
+            />
+          </div>
+          <input
+            onChange={(e) => setImage(e.target.files[0])}
+            type="file"
+            id="image"
+            hidden
+          />
+        </label>
+      ) : (
+        <img className="w-36 rounded" src={userData.image} alt="" />
+      )}
 
       {isEdit ? (
         <input
@@ -44,7 +97,7 @@ function MyProfile() {
           <p className="text-blue-500">{userData.email}</p>
           {/* Phone Number */}
           <p className="font-medium">Phone: </p>
-          <p>
+          <div>
             {" "}
             {isEdit ? (
               <input
@@ -58,13 +111,13 @@ function MyProfile() {
             ) : (
               <p className="text-blue-400">{userData.phone}</p>
             )}
-          </p>
+          </div>
           {/* Address */}
           <p className="font-medium">Address:</p>
           {isEdit ? (
             <p>
               <input
-                value={userData.address.line1}
+                value={userData?.address?.line1 || " "}
                 onChange={(e) =>
                   setUserData((prev) => ({
                     ...prev,
@@ -76,7 +129,7 @@ function MyProfile() {
               />
               <br />
               <input
-                value={userData.address.line2}
+                value={userData?.address?.line2 || " "}
                 onChange={(e) =>
                   setUserData((prev) => ({
                     ...prev,
@@ -89,9 +142,9 @@ function MyProfile() {
             </p>
           ) : (
             <p className="text-gray-500">
-              {userData.address.line1}
+              {userData?.address?.line1 || " "}
               <br />
-              {userData.address.line2}
+              {userData?.address?.line2 || " "}
             </p>
           )}
         </div>
@@ -134,10 +187,11 @@ function MyProfile() {
       <div className="mt-10">
         {isEdit ? (
           <button
-            className="border border-primary px-8 py-2 rounded-full hover:bg-primary hover:text-white transition-all"
-            onClick={() => setIsEdit(false)}
+            className="border border-primary px-8 py-2 rounded-full transition-all hover:bg-primary hover:text-white disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-inherit disabled:hover:text-inherit"
+            disabled={loading}
+            onClick={updateUserProfileData}
           >
-            Save Information
+            {loading ? "Saving Information..." : "Save Information"}
           </button>
         ) : (
           <button
