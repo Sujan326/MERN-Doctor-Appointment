@@ -144,7 +144,7 @@ const bookAppointment = async (req, res) => {
         return res.json({ success: false, message: "Slot Not Available" });
       } else {
         slots_booked[slotDate].push(slotTime);
-      } 
+      }
     } else {
       slots_booked[slotDate] = [];
       slots_booked[slotDate].push(slotTime);
@@ -178,4 +178,22 @@ const bookAppointment = async (req, res) => {
   }
 };
 
-export { registerUser, loginUser, getProfile, updateProfile, bookAppointment };
+// API to get user appointments : my-appointments
+const listAppointments = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const appointments = await Appointment.find({ userId });
+
+    res.json({ success: true, appointments });
+  } catch (error) {
+    res.json({ success: false, messsage: error.message });
+  }
+};
+export {
+  registerUser,
+  loginUser,
+  getProfile,
+  updateProfile,
+  bookAppointment,
+  listAppointments,
+};
