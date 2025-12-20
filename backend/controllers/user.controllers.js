@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import { v2 as cloudinary } from "cloudinary";
 import { Doctor } from "../models/doctor.models.js";
 import { Appointment } from "../models/appointment.models.js";
+import razorpay from "razorpay";
 
 // API to register user
 const registerUser = async (req, res) => {
@@ -224,6 +225,59 @@ const cancelAppointment = async (req, res) => {
   }
 };
 
+const razorpayInstance = new razorpay({
+  key_id: process.env.RAZOR_PAY_KEY_ID,
+  key_secret: process.env.RAZOR_PAY_KEY_SECRET,
+});
+
+// API to make appointment payment using razorpay
+const paymentRazorPay = async (req, res) => {
+  try {
+    const { appointmentId } = req.body;
+    const appointmentData = await Appointment.findById(appointmentId);
+
+    if (!appointmentData || appointmentData.cancelled) {
+      return res.json({
+        success: false,
+        message: "Appoinment Cancelled or Not Found",
+      });
+    }
+
+    // Creating options for razorpay payment
+    const options = {
+      amount: appointmentData.amount * 100,
+      currency: process.env.CURRENCY,
+      receipt: appointmentId,
+    };
+
+    // creation of an order
+    const order = await razorpayInstance.orders.create(options);
+
+    res.json({ success: true, order });
+  } catch (error) {
+    res.json({ success: false, messsage: error.message });
+  }
+};
+
+// API to verify payment of razorpay
+const verifyRazorpay = async (req, res) => {
+  try {
+    const { razorpay_order_id } = req.body;
+    const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id);
+
+    console.log("Order Information: ", orderInfo);
+
+    if (orderInfo.status === "paid") {
+      await Appointment.findByIdAndUpdate(orderInfo.receipt, { payment: true });
+      res.json({ success: true, message: "Payment Successful" });
+    } else {
+      res.json({ success: false, message: "Payment Failed" });
+    }
+  } catch (error) {
+    res.json({ success: false, messsage: error.message });
+  }
+};
+
 export {
   registerUser,
   loginUser,
@@ -232,4 +286,6 @@ export {
   bookAppointment,
   listAppointments,
   cancelAppointment,
+  paymentRazorPay,
+  verifyRazorpay,
 };
