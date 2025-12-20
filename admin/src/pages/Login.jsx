@@ -31,7 +31,9 @@ function Login() {
         }
       } else {
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   return (
