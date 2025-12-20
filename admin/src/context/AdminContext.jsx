@@ -7,7 +7,7 @@ export const AdminContext = createContext();
 
 const AdminContextProvider = (props) => {
   const [adminToken, setAdminToken] = useState(
-    // If adminToken there in Local-Storage use it (dont show login page) else use empty string (show the login page)
+    // If adminToken there in Local-Storage use it (show the admin page) else use empty string (show the login page)
     localStorage.getItem("adminToken") ? localStorage.getItem("adminToken") : ""
   );
   const [doctors, setDoctors] = useState([]);
