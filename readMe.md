@@ -33,6 +33,8 @@
 * **Razorpay Integration Documentation**
   👉 [https://razorpay.com/docs/payments/payment-gateway/web-integration/standard/integration-steps/](https://razorpay.com/docs/payments/payment-gateway/web-integration/standard/integration-steps/)
 
+* **Razorpay Test Card Details**
+  👉 [https://razorpay.com/docs/payments/payments/test-card-details/?preferred-country=IN](https://razorpay.com/docs/payments/payments/test-card-details/?preferred-country=IN)
 ---
 
 ## Login Credentials

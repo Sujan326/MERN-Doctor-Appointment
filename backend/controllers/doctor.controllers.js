@@ -144,9 +144,7 @@ const doctorDashboard = async (req, res) => {
 const doctorProfile = async (req, res) => {
   try {
     const doctorId = req.doctorId;
-    const profileData = await Doctor.findById(doctorId).select(
-      "-password"
-    );
+    const profileData = await Doctor.findById(doctorId).select("-password");
 
     res.json({ success: true, profileData });
   } catch (error) {
@@ -158,9 +156,9 @@ const doctorProfile = async (req, res) => {
 const updateDoctorProfile = async (req, res) => {
   try {
     const doctorId = req.doctorId;
-    const { fees, available } = req.body;
+    const { fees, address, available } = req.body;
 
-    await Doctor.findByIdAndUpdate(doctorId, { fees, available });
+    await Doctor.findByIdAndUpdate(doctorId, { fees, address, available });
 
     res.json({ success: true, message: "Profile Updated Successfully" });
   } catch (error) {

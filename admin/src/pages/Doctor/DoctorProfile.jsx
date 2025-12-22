@@ -25,6 +25,7 @@ function DoctorProfile() {
       const updateData = {
         fees: profileData.fees,
         available: profileData.available,
+        address: profileData.address,
       };
 
       const { data } = await axios.post(
@@ -75,7 +76,7 @@ function DoctorProfile() {
                 {profileData.degree} - {profileData.speciality}
               </p>
               <button className="py-0.5 px-2 border text-xs rounded-full">
-                {profileData.experience} Years
+                {profileData.experience}
               </button>
             </div>
 
@@ -108,10 +109,48 @@ function DoctorProfile() {
               </span>
             </p>
 
-            {/* <div className="flex gap-2 py-2">
+            <div className="flex flex-col gap-2 py-2">
               <p>Address:</p>
-              <p className="text-sm">{profileData.address}</p>
-            </div> */}
+
+              {isEdit ? (
+                <>
+                  <input
+                    type="text"
+                    className="border px-2 py-1 text-sm rounded"
+                    value={profileData.address.line1}
+                    onChange={(e) =>
+                      setProfileData((prev) => ({
+                        ...prev,
+                        address: {
+                          ...prev.address,
+                          line1: e.target.value,
+                        },
+                      }))
+                    }
+                  />
+
+                  <input
+                    type="text"
+                    className="border px-2 py-1 text-sm rounded"
+                    value={profileData.address.line2}
+                    onChange={(e) =>
+                      setProfileData((prev) => ({
+                        ...prev,
+                        address: {
+                          ...prev.address,
+                          line2: e.target.value,
+                        },
+                      }))
+                    }
+                  />
+                </>
+              ) : (
+                <>
+                  <p className="text-sm">{profileData.address.line1}</p>
+                  <p className="text-sm">{profileData.address.line2}</p>
+                </>
+              )}
+            </div>
 
             <div className="flex gap-2 pt-2">
               <input

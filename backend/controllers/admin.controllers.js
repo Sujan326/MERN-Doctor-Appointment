@@ -69,6 +69,8 @@ const addDoctor = async (req, res) => {
       return res.json({ success: false, message: "Image is required" });
     }
 
+    const parsedAddress = JSON.parse(address);
+
     // Doctor Data to store in DB.
     const doctorData = {
       name,
@@ -80,7 +82,7 @@ const addDoctor = async (req, res) => {
       experience,
       about,
       fees,
-      address,
+      address: parsedAddress,
       date: Date.now(),
     };
 
