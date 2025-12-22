@@ -65,6 +65,10 @@ const addDoctor = async (req, res) => {
     });
     const imageUrl = imageUpload.secure_url;
 
+    if (!imageFile) {
+      return res.json({ success: false, message: "Image is required" });
+    }
+
     // Doctor Data to store in DB.
     const doctorData = {
       name,
@@ -76,7 +80,7 @@ const addDoctor = async (req, res) => {
       experience,
       about,
       fees,
-      address: JSON.parse(address),
+      address,
       date: Date.now(),
     };
 

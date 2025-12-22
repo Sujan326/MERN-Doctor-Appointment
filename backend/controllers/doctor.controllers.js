@@ -107,7 +107,7 @@ const doctorDashboard = async (req, res) => {
   try {
     const doctorId = req.doctorId;
 
-    const appointments = await Appointment.find({ docId : doctorId });
+    const appointments = await Appointment.find({ docId: doctorId });
 
     let earnings = 0;
 
@@ -140,6 +140,34 @@ const doctorDashboard = async (req, res) => {
   }
 };
 
+// API to get doctor profile for doctor panel
+const doctorProfile = async (req, res) => {
+  try {
+    const doctorId = req.doctorId;
+    const profileData = await Doctor.findById(doctorId).select(
+      "-password"
+    );
+
+    res.json({ success: true, profileData });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};
+
+// API to update the doctor profile data from doctor panel
+const updateDoctorProfile = async (req, res) => {
+  try {
+    const doctorId = req.doctorId;
+    const { fees, available } = req.body;
+
+    await Doctor.findByIdAndUpdate(doctorId, { fees, available });
+
+    res.json({ success: true, message: "Profile Updated Successfully" });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
+  }
+};
+
 export {
   changeAvailablity,
   doctorList,
@@ -148,4 +176,6 @@ export {
   appointmentComplete,
   appointmentCancel,
   doctorDashboard,
+  doctorProfile,
+  updateDoctorProfile,
 };
