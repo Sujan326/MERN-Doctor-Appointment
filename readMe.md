@@ -1,21 +1,67 @@
-FRONTEND:
+# Doctor Appointment Booking – Setup & Credentials
 
-[TAILWIND-CONFIGURATION-LINK](https://tailwindcss.com/docs/installation/using-vite)
+## Frontend Resources
 
-[FONT](https://fonts.google.com/selection/embed)
+* **Tailwind CSS Configuration**
+  👉 [https://tailwindcss.com/docs/installation/using-vite](https://tailwindcss.com/docs/installation/using-vite)
 
-[TOAST-NOTIFICATION](https://www.npmjs.com/package/react-toastify)
+* **Fonts (Google Fonts)**
+  👉 [https://fonts.google.com/selection/embed](https://fonts.google.com/selection/embed)
 
-BACKEND:
+* **Toast Notifications (React Toastify)**
+  👉 [https://www.npmjs.com/package/react-toastify](https://www.npmjs.com/package/react-toastify)
 
-[DATABASE](https://cloud.mongodb.com/)
+---
 
-[CLOUDINARY](https://console.cloudinary.com/app)
+## Backend Resources
 
-[DEFAULT-IMAGE](https://www.base64-image.de/)
+* **MongoDB Database (Atlas)**
+  👉 [https://cloud.mongodb.com/](https://cloud.mongodb.com/)
 
-[JSON-STRINGIFY-TEXT](https://onlinetexttools.com/json-stringify-text)
+* **Cloudinary (Image Uploads)**
+  👉 [https://console.cloudinary.com/app](https://console.cloudinary.com/app)
 
-[RAZOR-PAY-API-KEY](https://dashboard.razorpay.com/app/website-app-settings/business-website-details)
+* **Default Image Generator (Base64)**
+  👉 [https://www.base64-image.de/](https://www.base64-image.de/)
 
-[RAZOR-PAY-DOCS](https://razorpay.com/docs/payments/payment-gateway/web-integration/standard/integration-steps/)
+* **JSON Stringify Tool**
+  👉 [https://onlinetexttools.com/json-stringify-text](https://onlinetexttools.com/json-stringify-text)
+
+* **Razorpay API Key Setup**
+  👉 [https://dashboard.razorpay.com/app/website-app-settings/business-website-details](https://dashboard.razorpay.com/app/website-app-settings/business-website-details)
+
+* **Razorpay Integration Documentation**
+  👉 [https://razorpay.com/docs/payments/payment-gateway/web-integration/standard/integration-steps/](https://razorpay.com/docs/payments/payment-gateway/web-integration/standard/integration-steps/)
+
+---
+
+## Login Credentials
+
+### 👤 User Credentials (Doctor Appointment Booking)
+
+**User 1**
+
+* Email: `sujan@gmail.com`
+* Password: `sujan2002`
+* Username: `Sujan Dev Update`
+
+**User 2**
+
+* Email: `sujan_dev@gmail.com`
+* Password: `12345678`
+* Username: `Sujan Dev`
+
+---
+
+### 🛠 Admin Credentials
+
+* Email: `admin@prescripto.com`
+* Password: `admin@123`
+
+---
+
+### 👨‍⚕️ Doctor Credentials
+
+* Email: `Richard@prescripto.com`
+* Password: `123456789`
+
