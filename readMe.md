@@ -39,7 +39,7 @@
 
 ## Login Credentials
 
-### 👤 User Credentials (Doctor Appointment Booking)
+### 👤 User Credentials
 
 **User 1**
 
